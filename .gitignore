@@ -4,6 +4,7 @@ obj/
 
 # Compiled binaries
 *.exe
+!installer/*-Setup.exe
 *.dll
 
 # Source control
