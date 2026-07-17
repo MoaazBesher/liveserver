@@ -1012,7 +1012,11 @@ class MainForm : Form
         };
 
         // Initial detection after form loads
-        Shown += (s, e) => RunDetection();
+        Shown += (s, e) =>
+        {
+            RunDetection();
+            System.Threading.ThreadPool.QueueUserWorkItem(_ => CheckForUpdates());
+        };
 
         // Tooltips
         tooltip.SetToolTip(browseBtn, "Browse for project folder");
@@ -1023,12 +1027,6 @@ class MainForm : Form
         tooltip.SetToolTip(installBtn, "Install project dependencies");
         tooltip.SetToolTip(portBox, "Server port number (1-65535)");
         tooltip.SetToolTip(clearLogBtn, "Clear log window");
-
-        // Start update check after UI is ready
-        BeginInvoke((MethodInvoker)delegate
-        {
-            System.Threading.ThreadPool.QueueUserWorkItem(_ => CheckForUpdates());
-        });
 
         // Save config on close
         FormClosing += (s, e) =>
