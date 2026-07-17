@@ -681,8 +681,8 @@ class MainForm : Form
     public MainForm(string initialPath = null)
     {
         Text = "Universal Live Server";
-        Size = new Size(780, 600);
-        MinimumSize = new Size(780, 600);
+        Size = new Size(780, 610);
+        MinimumSize = new Size(780, 610);
         StartPosition = FormStartPosition.CenterScreen;
         BackColor = Color.FromArgb(30, 30, 30);
         ForeColor = Color.White;
@@ -694,32 +694,54 @@ class MainForm : Form
         int y = 12;
 
         // Title
+        var titleBar = new Panel
+        {
+            Location = new Point(15, y),
+            Size = new Size(743, 40),
+            BackColor = Color.FromArgb(45, 45, 45)
+        };
+
         var title = new Label
         {
             Text = "Universal Live Server",
             Font = new Font("Segoe UI", 16, FontStyle.Bold),
-            Size = new Size(680, 40),
-            Location = new Point(15, y),
-            TextAlign = ContentAlignment.MiddleCenter,
+            Size = new Size(330, 40),
+            Location = new Point(15, 0),
+            TextAlign = ContentAlignment.MiddleLeft,
             ForeColor = Color.FromArgb(100, 200, 255),
-            BackColor = Color.FromArgb(45, 45, 45)
+            BackColor = Color.Transparent
         };
-        Controls.Add(title);
+        titleBar.Controls.Add(title);
+
+        var verBadge = new Label
+        {
+            Text = "v" + AppVersion.Current,
+            Font = new Font("Segoe UI", 9, FontStyle.Bold),
+            Size = new Size(55, 22),
+            Location = new Point(350, 9),
+            TextAlign = ContentAlignment.MiddleCenter,
+            ForeColor = Color.FromArgb(150, 150, 150),
+            BackColor = Color.FromArgb(55, 55, 55)
+        };
+        titleBar.Controls.Add(verBadge);
 
         updateLabel = new LinkLabel
         {
             Text = "",
-            Location = new Point(700, y + 8),
+            Location = new Point(660, 8),
             Size = new Size(75, 25),
             TextAlign = ContentAlignment.MiddleCenter,
             Font = new Font("Segoe UI", 8, FontStyle.Bold),
             ActiveLinkColor = Color.Cyan,
             LinkColor = Color.FromArgb(255, 200, 50),
             VisitedLinkColor = Color.FromArgb(255, 200, 50),
-            Visible = false
+            Visible = false,
+            BackColor = Color.Transparent
         };
         updateLabel.Click += (s, e) => Process.Start(AppVersion.ReleasesUrl);
-        Controls.Add(updateLabel);
+        titleBar.Controls.Add(updateLabel);
+
+        Controls.Add(titleBar);
         y += 52;
 
         // ── Project path row ──────────────────────────────────────────────────
@@ -966,7 +988,7 @@ class MainForm : Form
         logBox = new RichTextBox
         {
             Location = new Point(15, y),
-            Size = new Size(743, 340),
+            Size = new Size(743, 300),
             ReadOnly = true,
             BackColor = Color.FromArgb(20, 20, 20),
             ForeColor = Color.FromArgb(200, 200, 200),
@@ -976,25 +998,78 @@ class MainForm : Form
         };
         logBox.LinkClicked += (s, e) => Process.Start(e.LinkText);
         Controls.Add(logBox);
-        y += 345;
+        y += 305;
 
         // ── Footer ────────────────────────────────────────────────────────────
-        var linkLabel = new LinkLabel
+        var footerPanel = new Panel
         {
-            Text = "Created & Developed by Moaaz Besher  |  moaaz-ashraf.netlify.app",
             Location = new Point(15, y),
-            Size = new Size(743, 25),
-            TextAlign = ContentAlignment.MiddleCenter,
-            ForeColor = Color.FromArgb(150, 150, 150),
+            Size = new Size(743, 40),
+            BackColor = Color.FromArgb(35, 35, 35)
+        };
+
+        var versionLabel = new Label
+        {
+            Text = "v" + AppVersion.Current,
+            Location = new Point(10, 10),
+            Size = new Size(50, 20),
+            ForeColor = Color.FromArgb(100, 100, 100),
+            Font = new Font("Segoe UI", 8),
+            TextAlign = ContentAlignment.MiddleLeft
+        };
+        footerPanel.Controls.Add(versionLabel);
+
+        var creditLabel = new Label
+        {
+            Text = "Made by ",
+            Location = new Point(260, 8),
+            Size = new Size(55, 22),
+            ForeColor = Color.FromArgb(130, 130, 130),
+            Font = new Font("Segoe UI", 9),
+            TextAlign = ContentAlignment.MiddleRight
+        };
+        footerPanel.Controls.Add(creditLabel);
+
+        var nameLink = new LinkLabel
+        {
+            Text = "Moaaz Besher",
+            Location = new Point(315, 6),
+            Size = new Size(100, 25),
             ActiveLinkColor = Color.Cyan,
             LinkColor = Color.FromArgb(100, 200, 255),
             VisitedLinkColor = Color.FromArgb(100, 200, 255),
-            Font = new Font("Segoe UI", 9, FontStyle.Italic),
-            LinkBehavior = LinkBehavior.HoverUnderline
+            Font = new Font("Segoe UI", 9, FontStyle.Bold),
+            LinkBehavior = LinkBehavior.HoverUnderline,
+            TextAlign = ContentAlignment.MiddleLeft
         };
-        linkLabel.Links.Add(0, linkLabel.Text.Length, "https://moaaz-ashraf.netlify.app/");
-        linkLabel.LinkClicked += (s, e) => Process.Start(e.Link.LinkData as string);
-        Controls.Add(linkLabel);
+        nameLink.Links.Add(0, nameLink.Text.Length, "https://moaazbesher.vercel.app/");
+        nameLink.LinkClicked += (s, e) => Process.Start(e.Link.LinkData as string);
+        footerPanel.Controls.Add(nameLink);
+
+        var aboutBtn = new Button
+        {
+            Text = "About",
+            Location = new Point(660, 7),
+            Size = new Size(75, 25),
+            BackColor = Color.FromArgb(50, 50, 50),
+            ForeColor = Color.LightGray,
+            FlatStyle = FlatStyle.Flat,
+            Cursor = Cursors.Hand
+        };
+        aboutBtn.Click += (s, e) =>
+        {
+            MessageBox.Show(
+                "Universal Live Server v" + AppVersion.Current + "\n\n" +
+                "Auto-detect & run any web project with one click.\n\n" +
+                "Created & Developed by Moaaz Besher\n" +
+                "Portfolio: moaazbesher.vercel.app\n\n" +
+                "GitHub: github.com/MoaazBesher/liveserver",
+                "About Universal Live Server",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        };
+        footerPanel.Controls.Add(aboutBtn);
+
+        Controls.Add(footerPanel);
 
         // ── Drag & Drop ───────────────────────────────────────────────────────
         DragEnter += (s, e) =>
@@ -1115,7 +1190,9 @@ class MainForm : Form
         var path = pathBox.Text.Trim().Trim('"').Trim();
         if (!Directory.Exists(path))
         {
-            typeLabel.Text = "Project: -- (path not found)";
+            typeLabel.Text = string.IsNullOrEmpty(path)
+                ? "Drop a project folder here \u2193"
+                : "Project: -- (path not found)";
             typeLabel.ForeColor = Color.FromArgb(255, 150, 150);
             langLabel.Text = "";
             cmdLabel.Text = "";
