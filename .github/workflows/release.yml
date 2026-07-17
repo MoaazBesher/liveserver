@@ -1,0 +1,42 @@
+name: Build & Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET Framework
+        run: |
+          choco install netfx-4.8-devpack -y
+        shell: powershell
+
+      - name: Build
+        run: |
+          $csc = "C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe"
+          & $csc -nologo -out:"liveServer.exe" -target:winexe -win32icon:"src\app.ico" `
+            -reference:"System.Windows.Forms.dll","System.Drawing.dll","System.Core.dll" `
+            "src\liveServer.cs"
+        shell: powershell
+
+      - name: Package
+        run: |
+          New-Item -ItemType Directory -Path "release\UniversalLiveServer" -Force
+          Copy-Item "liveServer.exe" "release\UniversalLiveServer\"
+          Copy-Item "README.md" "release\UniversalLiveServer\"
+          Copy-Item "version.json" "release\UniversalLiveServer\"
+          Compress-Archive -Path "release\UniversalLiveServer\*" -DestinationPath "release\UniversalLiveServer.zip"
+        shell: powershell
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: release/UniversalLiveServer.zip
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

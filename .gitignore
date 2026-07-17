@@ -1,0 +1,22 @@
+# Build output
+bin/
+obj/
+
+# Compiled binaries
+*.exe
+*.dll
+
+# Source control
+*.user
+*.suo
+*.sln.docstates
+
+# IDE
+.vs/
+*.csproj
+*.sln
+
+# OS
+Thumbs.db
+.DS_Store
+Desktop.ini
