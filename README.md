@@ -1,77 +1,68 @@
-# Universal Live Server
+<div align="center">
 
-> Auto-detect & run any web project with one click.
+<img src="https://img.shields.io/badge/version-1.0.0-blue?style=for-the-badge" />
+<img src="https://img.shields.io/badge/platform-Windows-lightgrey?style=for-the-badge&logo=windows" />
+<img src="https://img.shields.io/badge/.NET_Framework-4.8-purple?style=for-the-badge" />
 
-A Windows desktop tool that automatically detects your project type and runs the appropriate development server.
+# 🚀 Universal Live Server
 
-## Features
+**A powerful, professional Windows desktop application that auto-detects your project type and launches the right development server in one click.**
 
-- Auto-detects project type from 25+ frameworks and languages
-- Runs the correct server command automatically
-- Script selector for npm projects (dev, start, build, etc.)
-- Install dependencies with one click
-- Port conflict detection and management
-- Auto-update checker
-- Drag-and-drop folder support
-- Dark theme UI
+[⬇️ Download Installer](https://github.com/MoaazBesher/liveserver/releases/download/v1.0.0/UniversalLiveServer-1.0.0-Setup.exe) &nbsp;&nbsp;|&nbsp;&nbsp; [📦 View All Releases](https://github.com/MoaazBesher/liveserver/releases)
 
-## Supported Projects
+---
 
-| Category | Frameworks |
-|----------|-----------|
-| **Node.js** | React (Vite/CRA), Vue (Vite/CLI), Angular, Next.js, Nuxt, SvelteKit, Astro, Gatsby, Express |
-| **PHP** | Laravel, any PHP/Composer project |
-| **Python** | Django, Flask, FastAPI, HTTP server |
+</div>
+
+## ✨ Features
+
+- 🔍 **Auto-detects 25+ project types** — React, Vue, Angular, Next.js, Laravel, Django, Flask, FastAPI, PHP, Python, Ruby on Rails, Go, .NET, Docker, and more
+- ▶️ **One-click Start / Stop** — no command line needed
+- 🌐 **Auto-opens your browser** when the server is ready
+- 📜 **npm Script Selector** — choose which script to run for Node.js projects
+- 📦 **Dependency Installer** — install `npm install` / `pip install` / etc. right from the UI
+- 🔌 **Port conflict detection** — detects and kills blocking processes automatically
+- 🖱️ **Drag & Drop support** — drop a folder directly onto the app
+- 🌙 **Beautiful Dark UI** — modern, clean, professional interface
+- 🔗 **Clickable URLs** in the log output
+
+---
+
+## 📋 Supported Project Types
+
+| Language / Runtime | Frameworks Detected |
+|---|---|
+| **Node.js** | React (CRA, Vite), Vue (Vite, CLI), Next.js, Nuxt.js, SvelteKit, Astro, Gatsby, Angular, Generic Node |
+| **PHP** | Laravel, Generic PHP, Composer |
+| **Python** | Django, Flask, FastAPI, Generic Python |
 | **Ruby** | Ruby on Rails, Jekyll |
-| **Go** | Any Go module |
-| **.NET** | Any .NET Core project |
+| **Go** | Generic Go modules |
+| **C# / .NET** | .NET Core / .NET 5+ |
 | **Docker** | Docker Compose, Dockerfile |
-| **Static** | Any HTML/CSS/JS site |
-| _and more..._ | |
+| **HTML/CSS/JS** | Static sites via live-server |
 
-## Quick Start
+---
 
-1. Download the latest release from [Releases](https://github.com/MoaazBesher/liveserver/releases)
-2. Run `liveServer.exe`
-3. Drag your project folder onto the window (or browse)
-4. Click **Start Server**
+## 🚀 Getting Started
 
-## Installation
+1. **Download** the installer from the link above
+2. **Run** `UniversalLiveServer-1.0.0-Setup.exe`
+3. A shortcut will be placed on your **Desktop**
+4. Open the app, **browse** to your project folder or **drag & drop** it
+5. Click **▶ Start Server** — done!
 
-Run the installer as Administrator:
+---
 
-```powershell
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-.\installer\install.ps1
-```
+## 💻 Requirements
 
-This will:
-- Install to `Program Files\UniversalLiveServer`
-- Add Start Menu shortcut
-- Add folder right-click menu (`Open with Universal Live Server`)
-- Add `uls` command to PATH
+- Windows 10 / 11
+- .NET Framework 4.8 (pre-installed on most Windows systems)
+- The relevant runtime for your project (Node.js, PHP, Python, etc.)
 
-## Development
+---
 
-### Build Requirements
-- Windows with .NET Framework 4.x
-- C# compiler (`csc.exe`)
+<div align="center">
 
-### Build
-```cmd
-build.bat
-```
+**Made with ❤️ by [Moaaz Besher](https://moaaz-ashraf.netlify.app/)**
 
-### Update Version
-1. Edit `AppVersion.Current` in `src/liveServer.cs`
-2. Update `version.json` with new version & changelog
-3. Build & commit
-4. Create a GitHub Release with the zip
-
-## How It Works
-
-When you drop a project folder, the tool scans for config files (package.json, angular.json, Dockerfile, etc.) and matches against known project types. It then builds the appropriate server command and runs it via cmd.exe, with proper process tree management for clean stop/restart.
-
-## License
-
-MIT
+</div>
