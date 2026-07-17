@@ -1,5 +1,5 @@
 {
   "version": "1.0.0",
-  "downloadUrl": "https://github.com/moaazbesher/universal-live-server/releases/download/v1.0.0/UniversalLiveServer.zip",
+  "downloadUrl": "https://github.com/MoaazBesher/liveserver/releases/download/v1.0.0/UniversalLiveServer.zip",
   "changelog": "Initial release\n- Auto-detect 25+ project types\n- One-click server start/stop\n- npm script selector\n- Dependency installer\n- Dark theme UI\n- Auto-update notifications"
 }

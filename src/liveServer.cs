@@ -29,8 +29,8 @@ static class AppVersion
     public static readonly string Current = "1.0.0";
 
     // ── CHANGE THESE to match your GitHub repo ────────────────────────────────
-    public static readonly string GitHubUser = "moaazbesher";
-    public static readonly string GitHubRepo = "universal-live-server";
+    public static readonly string GitHubUser = "MoaazBesher";
+    public static readonly string GitHubRepo = "liveserver";
     // ───────────────────────────────────────────────────────────────────────────
 
     public static string RawVersionUrl

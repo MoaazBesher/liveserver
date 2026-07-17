@@ -31,7 +31,7 @@ A Windows desktop tool that automatically detects your project type and runs the
 
 ## Quick Start
 
-1. Download the latest release from [Releases](https://github.com/moaazbesher/universal-live-server/releases)
+1. Download the latest release from [Releases](https://github.com/MoaazBesher/liveserver/releases)
 2. Run `liveServer.exe`
 3. Drag your project folder onto the window (or browse)
 4. Click **Start Server**
