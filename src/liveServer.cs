@@ -15,11 +15,43 @@ using System.Windows.Forms;
 static class Program
 {
     [STAThread]
-    static void Main()
+    static void Main(string[] args)
     {
-        Application.EnableVisualStyles();
-        Application.SetCompatibleTextRenderingDefault(false);
-        Application.Run(new MainForm());
+        try
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            Application.ThreadException += (s, e) =>
+            {
+                var msg = "Unhandled error:\n" + e.Exception.Message +
+                          "\n\n" + e.Exception.StackTrace;
+                MessageBox.Show(msg, "Universal Live Server - Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            };
+            AppDomain.CurrentDomain.UnhandledException += (s, e) =>
+            {
+                var ex = e.ExceptionObject as Exception;
+                var msg = "Fatal error:\n" + (ex != null ? ex.Message : "Unknown") +
+                          "\n\nPlease report this issue.";
+                MessageBox.Show(msg, "Universal Live Server - Fatal Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            };
+
+            string initialPath = null;
+            if (args.Length > 0)
+            {
+                var path = args[0].Trim().Trim('"');
+                if (Directory.Exists(path)) initialPath = path;
+            }
+
+            Application.Run(new MainForm(initialPath));
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Failed to start:\n" + ex.Message,
+                "Universal Live Server", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
     }
 }
 
@@ -646,7 +678,7 @@ class MainForm : Form
     bool detectionScheduled;
     LinkLabel updateLabel;
 
-    public MainForm()
+    public MainForm(string initialPath = null)
     {
         Text = "Universal Live Server";
         Size = new Size(780, 600);
@@ -707,15 +739,22 @@ class MainForm : Form
             ForeColor = Color.White,
             BorderStyle = BorderStyle.FixedSingle
         };
-        try
+        if (!string.IsNullOrEmpty(initialPath))
         {
-            if (File.Exists(ConfigFile))
-            {
-                var saved = File.ReadAllText(ConfigFile, Encoding.UTF8).Trim();
-                if (Directory.Exists(saved)) pathBox.Text = saved;
-            }
+            pathBox.Text = initialPath;
         }
-        catch { }
+        else
+        {
+            try
+            {
+                if (File.Exists(ConfigFile))
+                {
+                    var saved = File.ReadAllText(ConfigFile, Encoding.UTF8).Trim();
+                    if (Directory.Exists(saved)) pathBox.Text = saved;
+                }
+            }
+            catch { }
+        }
         pathBox.TextChanged += (s, e) => ScheduleDetection();
         pathBox.Leave += (s, e) => { pathBox.Text = pathBox.Text.Trim().Trim('"'); };
         pathBox.GotFocus += (s, e) => { pathBox.SelectAll(); };
